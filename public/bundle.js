@@ -60,40 +60,11 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 0);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
-/***/ (function(module, exports, __webpack_require__) {
-
-const mapboxgl = __webpack_require__(1);
-
-mapboxgl.accessToken = "pk.eyJ1Ijoic2FuZHltYWsiLCJhIjoiY2phOXV3MWRlMGxnNTMwcTlsNnFxZ3JqdiJ9.fy0YCfAn3rRR_bNpkwTnDg";
-
-const map = new mapboxgl.Map({
-  container: "map",
-  center: [-74.009, 40.705], // FullStack NY coordinates; alternatively, use [-87.6354, 41.8885] for Chicago
-  zoom: 12, // starting zoom
-  style: "mapbox://styles/mapbox/streets-v10" // mapbox has lots of different map styles available.
-});
-
-
-
-// const mapboxgl = require("mapbox-gl");
-
-// mapboxgl.accessToken = "pk.eyJ1Ijoic2FuZHltYWsiLCJhIjoiY2phOXV3MWRlMGxnNTMwcTlsNnFxZ3JqdiJ9.fy0YCfAn3rRR_bNpkwTnDg";
-
-// const map = new mapboxgl.Map({
-//   container: "map",
-//   center: [-74.009, 40.705], // FullStack NY coordinates; alternatively, use [-87.6354, 41.8885] for Chicago
-//   zoom: 12, // starting zoom
-//   style: "mapbox://styles/mapbox/streets-v10" // mapbox has lots of different map styles available.
-// });
-
-
-/***/ }),
-/* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var require;var require;(function(f){if(true){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.mapboxgl = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return require(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(_dereq_,module,exports){
@@ -646,6 +617,36 @@ module.exports={"$version":8,"$root":{"version":{"required":true,"type":"enum","
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(2)))
 
 /***/ }),
+/* 1 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const mapboxgl = __webpack_require__(0);
+const buildMarker = __webpack_require__(3);
+
+mapboxgl.accessToken = "pk.eyJ1Ijoic2FuZHltYWsiLCJhIjoiY2phOXV3MWRlMGxnNTMwcTlsNnFxZ3JqdiJ9.fy0YCfAn3rRR_bNpkwTnDg";
+
+const map = new mapboxgl.Map({
+  container: "map",
+  center: [-74.009, 40.705], // FullStack NY coordinates; alternatively, use [-87.6354, 41.8885] for Chicago
+  zoom: 12, // starting zoom
+  style: "mapbox://styles/mapbox/streets-v10" // mapbox has lots of different map styles available.
+});
+
+buildMarker('hotel', [-74.009, 40.705]).addTo(map);
+
+// const mapboxgl = require("mapbox-gl");
+
+// mapboxgl.accessToken = "pk.eyJ1Ijoic2FuZHltYWsiLCJhIjoiY2phOXV3MWRlMGxnNTMwcTlsNnFxZ3JqdiJ9.fy0YCfAn3rRR_bNpkwTnDg";
+
+// const map = new mapboxgl.Map({
+//   container: "map",
+//   center: [-74.009, 40.705], // FullStack NY coordinates; alternatively, use [-87.6354, 41.8885] for Chicago
+//   zoom: 12, // starting zoom
+//   style: "mapbox://styles/mapbox/streets-v10" // mapbox has lots of different map styles available.
+// });
+
+
+/***/ }),
 /* 2 */
 /***/ (function(module, exports) {
 
@@ -670,6 +671,32 @@ try {
 // easier to handle this case. if(!global) { ...}
 
 module.exports = g;
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, exports, __webpack_require__) {
+
+const mapboxgl = __webpack_require__(0);
+
+let icons = {
+  default: 'http://i.imgur.com/WbMOfMl.png',
+  activity: 'http://i.imgur.com/WbMOfMl.png',
+  hotel: 'http://i.imgur.com/D9574Cu.png',
+  restaurant: 'http://i.imgur.com/cqR6pUI.png'
+};
+
+
+function buildMarker(type, coordinates) {
+  const markerDomEl = document.createElement("div");
+  let url = `url(${icons[type]})`;
+  markerDomEl.style.width = "32px";
+  markerDomEl.style.height = "39px";
+  markerDomEl.style.backgroundImage = url.toString();
+  return new mapboxgl.Marker(markerDomEl).setLngLat(coordinates);
+};
+
+module.exports = buildMarker;
 
 
 /***/ })
